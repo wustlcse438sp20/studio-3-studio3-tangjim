@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cse438_rest_studio.Adapter.BreweryListAdapter
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,5 +28,11 @@ class MainActivity : AppCompatActivity() {
         //TODO #10: Set up observer code for the LiveData object from the View Model
 
         //TODO #11: Connect the button so that it performs the search when it is clicked
+        viewModel.getCategories()
+
+        search_button.setOnClickListener {
+            val input: String = search_box.text.toString()
+            viewModel!!.getQuestionsBySearch(categoryList[categorySpinner.selectedItemPosition].id.toString(), input)
+        }
     }
 }

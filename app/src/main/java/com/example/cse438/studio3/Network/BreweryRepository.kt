@@ -11,6 +11,38 @@ import retrofit2.HttpException
 class BreweryRepository {
 
     //TODO #6: Create a function that launches a coroutine for searching by city
+    val service = ApiClient.makeRetrofitService()
 
+    fun getCity(resBody: MutableLiveData<List<Brewery>>, city: String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = service.getCity(city)
+
+            withContext(Dispatchers.Main) {
+                try{
+                    if(response.isSuccessful) {
+                        resBody.value = response.body()
+                    }
+                } catch (e: HttpException) {
+                    println("Http error")
+                }
+            }
+        }
+    }
     //TODO #7: Create a function that launches a coroutine for searching by a generic term
+    fun getBreweryBySearch(resBody: MutableLiveData<List<Brewery>>, name: String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = service.getBreweryBySearch(name)
+
+            withContext(Dispatchers.Main) {
+                try{
+                    if(response.isSuccessful) {
+                        resBody.value = response.body()
+                    }
+                } catch (e: HttpException) {
+                    println("Http error")
+                }
+            }
+        }
+    }
+
 }
